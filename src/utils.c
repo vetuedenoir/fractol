@@ -48,17 +48,31 @@ void	ft_clear_data(t_data *data)
 		free(data->mlx);
 	}
 	exit (0);
+}
 
+int	quit(int keycode, t_data *data)
+{
+	ft_printf("%d\n", keycode);
+		mlx_destroy_image(data->mlx, data->img1.img);
+		mlx_destroy_image(data->mlx, data->img2.img);
+	if (data->mlx_win)
+		mlx_destroy_window(data->mlx, data->mlx_win);
+	if (data->mlx)
+		mlx_destroy_display(data->mlx);
+	free(data->mlx);
+	exit(0);
 }
 
 void	init_data(t_data *data)
 {
 
 	mlx_get_screen_size(data->mlx, &data->width, &data->height);
-	if (data->width > WIDTH)
+	/*if (data->width > WIDTH)
 		data->width = WIDTH;
 	if (data->height > HEIGHT)
-		data->height = HEIGHT;
+		data->height = HEIGHT;*/
+	data->height = 600;
+	data->width = 600;
 	data->img1.img = mlx_new_image(data->mlx, data->width, data->height);
 	if (!data->img1.img)
 		ft_clear_data(data);
