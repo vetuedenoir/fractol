@@ -16,7 +16,7 @@ RM = rm -f
 
 SRC_DIR = src/
 OBJ_DIR = obj/
-SRC = $(SRC_DIR)fractol.c $(SRC_DIR)utils.c
+SRC = $(SRC_DIR)fractol.c $(SRC_DIR)utils.c $(SRC_DIR)hook.c
 OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 
 NAME = fractol
@@ -49,6 +49,7 @@ fclean: clean
 		@make fclean -C ./libft
 		@make clean -C ./minilibx-linux
 
+x:	clean all
 
 re: fclean all
 

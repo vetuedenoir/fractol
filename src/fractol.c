@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../fractol.h"
 
 void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 {
@@ -21,12 +21,11 @@ void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 	else
 	{
 		color.t = 256;
-		color.r = 128 + iteration;
-		color.g = 0;
-		color.b = 0;
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(color.t, color.r, 0, 0));
+		color.r = 128 + (iteration * 2);
+		color.g = 0 + (iteration * 2);
+		color.b = 0 + (iteration * 5);
+		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(color.t, color.r, color.g, color.b));
 	}
-
 }
 
 int	ft_formule_mandelbrot(double x, double y)
@@ -43,6 +42,7 @@ int	ft_formule_mandelbrot(double x, double y)
 	z_r = 0;
 	z_i = 0;
 	i = 0;
+	//printf("cr = %lf et c_i = %lf \n", c_r, c_i);
 	while (z_r * z_r + z_i * z_i < 4 && i < MAX_ITERATION)
 	{
 		tmp = z_r;
@@ -61,22 +61,21 @@ void	mandelbrot(t_data *data)
 	int		hauteur;
 	int		color;
 
-
 	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, "Mandelbrot");
 	if (data->mlx_win == NULL)
 		ft_clear_data(data);
 	p.x1 = -2.2;
 	p.x2 = 1.8;
-	p.y1 = -2;
-	p.y2 = 2;
-	zoom = 200;
+	p.y1 = -1.6;
+	p.y2 = 2.6;
+	zoom = 400;
 	hauteur = 0;
 	while (hauteur < data->height)
 	{
 		largeur = 0;
 		while (largeur < data->width)
 		{
-			color = ft_formule_mandelbrot(largeur / zoom + p.x1, hauteur / zoom + p.y1);
+			color = ft_formule_mandelbrot((double)largeur / (double)zoom + p.x1, (double)hauteur / (double)zoom + p.y1);
 			//printf("color = %d	: x = %d et y = %d", color, largeur, hauteur);
 			color_put(data, color, largeur, hauteur);
 			largeur++;
@@ -86,7 +85,6 @@ void	mandelbrot(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img1.img, 0, 0);
 }
 
-
 int	main(int argc, char *argv[])
 {
 	t_data	data;
@@ -95,9 +93,6 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!ft_strncmp(argv[1], "Mandelbrot", 11) || !ft_strncmp(argv[1], "Julia", 6))
 	{
-		data.mlx = mlx_init();
-		if (!data.mlx)
-			exit(0);
 		init_data(&data);
 		if (!ft_strncmp(argv[1], "Mandelbrot", 11))
 			mandelbrot(&data);
@@ -106,8 +101,7 @@ int	main(int argc, char *argv[])
 			//julia(&data);
 			return (1);
 		}
-		mlx_hook(data.mlx_win, 33, 1L << 17, &quit, &data);
-		mlx_loop(data.mlx);
+		loop(&data);
 	}
 	else
 		return (1);

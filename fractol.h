@@ -24,7 +24,7 @@
 
 # define WIDTH			1600
 # define HEIGHT			1000
-# define MAX_ITERATION	100
+# define MAX_ITERATION	50
 
 typedef struct	s_point
 {
@@ -69,7 +69,9 @@ void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 int		makecolor(int t, int rouge, int green, int blue);
 void	init_data(t_data *data);
 void	ft_clear_data(t_data *data);
-int		quit(int keycode, t_data *data);
-
+int		quit(t_data *data);
+int		key_hook(int key, t_data *data);
+int		mouse_hook(int mouse, t_data *data);
+void	loop(t_data *data);
 
 #endif
