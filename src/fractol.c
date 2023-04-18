@@ -55,7 +55,7 @@ int	ft_formule_mandelbrot(double x, double y)
 
 void	mandelbrot(t_data *data)
 {
-	t_point	p;
+	t_point		p;
 	int		zoom;
 	int		largeur;
 	int		hauteur;
@@ -64,12 +64,13 @@ void	mandelbrot(t_data *data)
 	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, "Mandelbrot");
 	if (data->mlx_win == NULL)
 		ft_clear_data(data);
-	p.x1 = -2.2;
-	p.x2 = 1.8;
-	p.y1 = -1.6;
-	p.y2 = 2.6;
-	zoom = 400;
+	p.x1 = -2;
+	p.x2 = 2;
+	p.y1 = -2;
+	p.y2 = 2;
+	zoom = data->width / 4;
 	hauteur = 0;
+	printf("largeur = %d et hauteur = %d \n" ,data->width, data->height);
 	while (hauteur < data->height)
 	{
 		largeur = 0;

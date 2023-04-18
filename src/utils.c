@@ -56,12 +56,12 @@ void	init_data(t_data *data)
 	if (!data->mlx)
 		exit(0);
 	mlx_get_screen_size(data->mlx, &data->width, &data->height);
-	/*if (data->width > WIDTH)
-		data->width = WIDTH;
-	if (data->height > HEIGHT)
-		data->height = HEIGHT;*/
-	data->height = 1600;
-	data->width = 1600;
+	if (data->width > data->height)
+		data->width = data->height;
+	else
+		data->height = data->width;
+	data->height -= 65;
+	data->width -= 65;
 	data->img1.img = mlx_new_image(data->mlx, data->width, data->height);
 	if (!data->img1.img)
 		ft_clear_data(data);

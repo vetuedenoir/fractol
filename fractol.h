@@ -24,7 +24,7 @@
 
 # define WIDTH			1600
 # define HEIGHT			1000
-# define MAX_ITERATION	50
+# define MAX_ITERATION	200
 
 typedef struct	s_point
 {
