@@ -15,20 +15,49 @@
 void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 {
 	t_color color;
-
-	if (iteration == MAX_ITERATION)
+	color.b = 0;
+	color.g = 0;
+	color.r = 128;
+	if (iteration == data->max_iteration)
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, 0xFF000000);
 	else
 	{
 		color.t = 256;
-		color.r = 128 + (iteration * 2);
-		color.g = 0 + (iteration * 2);
-		color.b = 0 + (iteration * 5);
+		iteration++;
+		while (color.r < 256 && --iteration)
+		{
+			color.r = color.r + 2;
+			color.b = color.b + 1;
+		}
+		while (color.g < 256 && --iteration)
+		{
+			color.g = color.g + 2;
+			color.r = color.r - 2;
+		}
+		while (color.b < 256 && --iteration)
+		{
+			color.b = color.b + 2;
+			color.r = color.r + 2;
+		}
+		while (color.b > 100)
+		{
+			color.b--;
+			color.r--;
+			color.g--;
+		}
+		while (color.b > 0)
+		{
+			color.b -= 2;
+		}
+		while (color.r > 0)
+		{
+			color.r -= 2;
+		}
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(color.t, color.r, color.g, color.b));
 	}
 }
 
-int	ft_formule_mandelbrot(double x, double y)
+int	ft_formule_mandelbrot(double x, double y, int max_iteration)
 {
 	double	c_r;
 	double	c_i;
@@ -43,7 +72,7 @@ int	ft_formule_mandelbrot(double x, double y)
 	z_i = 0;
 	i = 0;
 	//printf("cr = %lf et c_i = %lf \n", c_r, c_i);
-	while (z_r * z_r + z_i * z_i < 4 && i < MAX_ITERATION)
+	while (z_r * z_r + z_i * z_i < 4 && i < max_iteration)
 	{
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
@@ -55,28 +84,18 @@ int	ft_formule_mandelbrot(double x, double y)
 
 void	mandelbrot(t_data *data)
 {
-	t_point		p;
-	int		zoom;
 	int		largeur;
 	int		hauteur;
 	int		color;
 
-	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, "Mandelbrot");
-	if (data->mlx_win == NULL)
-		ft_clear_data(data);
-	p.x1 = -2;
-	p.x2 = 2;
-	p.y1 = -2;
-	p.y2 = 2;
-	zoom = data->width / 4;
+	
 	hauteur = 0;
-	printf("largeur = %d et hauteur = %d \n" ,data->width, data->height);
 	while (hauteur < data->height)
 	{
 		largeur = 0;
 		while (largeur < data->width)
 		{
-			color = ft_formule_mandelbrot((double)largeur / (double)zoom + p.x1, (double)hauteur / (double)zoom + p.y1);
+			color = ft_formule_mandelbrot((double)largeur / (double)data->p.zoom + data->p.x1, (double)hauteur / (double)data->p.zoom - data->p.y2, data->max_iteration);
 			//printf("color = %d	: x = %d et y = %d", color, largeur, hauteur);
 			color_put(data, color, largeur, hauteur);
 			largeur++;
@@ -94,7 +113,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!ft_strncmp(argv[1], "Mandelbrot", 11) || !ft_strncmp(argv[1], "Julia", 6))
 	{
-		init_data(&data);
+		init_data(&data, argv[1]);
 		if (!ft_strncmp(argv[1], "Mandelbrot", 11))
 			mandelbrot(&data);
 		else if (!ft_strncmp(argv[1], "Julia", 6))
