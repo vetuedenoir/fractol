@@ -12,50 +12,7 @@
 
 #include "../fractol.h"
 
-void	color_put(t_data *data, int iteration, int largeur, int hauteur)
-{
-	t_color color;
-	color.b = 0;
-	color.g = 0;
-	color.r = 128;
-	if (iteration == data->max_iteration)
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, 0xFF000000);
-	else
-	{
-		color.t = 256;
-		iteration++;
-		while (color.r < 256 && --iteration)
-		{
-			color.r = color.r + 2;
-			color.b = color.b + 1;
-		}
-		while (color.g < 256 && --iteration)
-		{
-			color.g = color.g + 2;
-			color.r = color.r - 2;
-		}
-		while (color.b < 256 && --iteration)
-		{
-			color.b = color.b + 2;
-			color.r = color.r + 2;
-		}
-		while (color.b > 100)
-		{
-			color.b--;
-			color.r--;
-			color.g--;
-		}
-		while (color.b > 0)
-		{
-			color.b -= 2;
-		}
-		while (color.r > 0)
-		{
-			color.r -= 2;
-		}
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(color.t, color.r, color.g, color.b));
-	}
-}
+
 
 int	ft_formule_mandelbrot(double x, double y, int max_iteration)
 {
@@ -121,6 +78,7 @@ int	main(int argc, char *argv[])
 			//julia(&data);
 			return (1);
 		}
+
 		loop(&data);
 	}
 	else

@@ -67,9 +67,12 @@ typedef struct  s_color
 
 void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 int		makecolor(int t, int rouge, int green, int blue);
+void	color_put(t_data *data, int iteration, int largeur, int hauteur);
+
 void	init_data(t_data *data, char *name);
 void	ft_clear_data(t_data *data);
 int		quit(t_data *data);
+
 int		key_hook(int key, t_data *data);
 int		mouse_hook(int mouse, int x, int y, t_data *data);
 void	loop(t_data *data);
