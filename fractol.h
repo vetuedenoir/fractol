@@ -13,16 +13,16 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# include <math.h>
+# include <tgmath.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include <math.h>
+
 # include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
-
-# define MAX_ITERATION	300
 
 typedef struct	s_point
 {
@@ -31,7 +31,7 @@ typedef struct	s_point
 	long double	y1;
 	long double	y2;
 	long double	ecart;
-	int	zoom;
+	long	zoom;
 }		t_point;
 
 
@@ -49,8 +49,8 @@ typedef struct  s_data
 {
 	void		*mlx;
 	void		*mlx_win;
+	void		*f;
 	t_data_img	img1;
-	t_data_img	img2;
 	t_point		p;
 	int			width;
 	int			height;
@@ -69,7 +69,7 @@ void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 int		makecolor(int t, int rouge, int green, int blue);
 void	color_put(t_data *data, int iteration, int largeur, int hauteur);
 
-void	init_data(t_data *data, char *name);
+void	init_data(t_data *data, char *name, char *option);
 void	ft_clear_data(t_data *data);
 int		quit(t_data *data);
 
@@ -78,5 +78,13 @@ int		mouse_hook(int mouse, int x, int y, t_data *data);
 void	loop(t_data *data);
 
 void	mandelbrot(t_data *data);
+void	createimg(t_data *data, int (*f)(long double x, long double y, int max_iteration));
+
+int	ft_formule_mandelbrot(long double x, long double y, int max_iteration);
+int	ft_formule_mandelbrot3(long double x, long double y, int max_iteration);
+int	ft_formule_mandelbrot4(long double x, long double y, int max_iteration);
+int	ft_formule_mandelbrotn2(long double x, long double y, int max_iteration);
+
+
 
 #endif

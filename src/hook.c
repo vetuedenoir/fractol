@@ -18,7 +18,7 @@ void	zoom(t_point *p, int E)
 
 	dif = (p->ecart - ((long double)E / (long double)p->zoom)) / (long double)2;
 	if (p->x1 > 0)
-		p->x1 = p->x1 - dif;
+		p->x1 = p->x1 + dif;
 	else
 		p->x1 = p->x1 + dif;
 	if (p->x2 > 0)
@@ -33,7 +33,9 @@ void	zoom(t_point *p, int E)
 		p->y2 = p->y2 - dif;
 	else
 		p->y2 = p->y2 - dif;
-	p->ecart = (long double)E / (long double)p->zoom; 
+	p->ecart = (long double)E / (long double)p->zoom;
+	printf("Apres zoom : x1 = %.10Lf x2 = %.10Lf et y1 = %.10Lf , y2 = %.10Lf\n", p->x1, p->x2, p->y1, p->y2);
+	printf("ecart = %.10Lf\n\n", p->ecart);
 }
 
 
@@ -49,14 +51,14 @@ void	redefinition(t_point *p, int x, int y, int E)
 	r = (y - m) * -1;
 	p->y1 = p->y1 + ((double)r / (double)p->zoom);
 	p->y2 = p->y2 + ((double)r / (double)p->zoom);
-//	printf("x1 = %f x2 = %f et y1 = %f , y2 = %f\n", p->x1, p->x2, p->y1, p->y2);
+	printf("x1 = %.10Lf x2 = %.10Lf et y1 = %.10Lf , y2 = %.10Lf\n", p->x1, p->x2, p->y1, p->y2);
 }
 
 int mouse_hook(int mouse, int x, int y, t_data *data)
 {
 	(void)data;
-	printf("mouse = %d\n", mouse);
-	printf("souris coordonne :\n\t x = %d et y = %d\n", x, y);
+	//printf("mouse = %d\n", mouse);
+	//printf("souris coordonne :\n\t x = %d et y = %d\n", x, y);
 	if (mouse != 4 && mouse != 5 && mouse != 1 && mouse != 3)
 		return (1);
 	redefinition(&data->p, x, y , data->height);
@@ -68,8 +70,9 @@ int mouse_hook(int mouse, int x, int y, t_data *data)
 		data->p.zoom = data->p.zoom * 2.0;
 	if (mouse == 3)
 		data->p.zoom = data->p.zoom * 0.5;
+	printf("zoom = %ld\n", data->p.zoom);
 	zoom(&data->p, data->height);
-	mandelbrot(data);
+	createimg(data, data->f);
 	return (0);
 }
 
@@ -79,7 +82,6 @@ int	key_hook(int key, t_data *data)
 	if (key == 65307 || key == 99)
 	{
 		mlx_destroy_image(data->mlx, data->img1.img);
-		mlx_destroy_image(data->mlx, data->img2.img);
 		mlx_destroy_window(data->mlx, data->mlx_win);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
@@ -101,14 +103,13 @@ int	key_hook(int key, t_data *data)
 	if (key == 65364) // bas
 		redefinition(&data->p, data->width / 2, (data->height / 4) * 3, data->height);
 	printf("iteration %d\n", data->max_iteration);
-	mandelbrot(data);
+	createimg(data, data->f);
 	return (1);
 }
 
 int	quit(t_data *data)
 {
 	mlx_destroy_image(data->mlx, data->img1.img);
-	mlx_destroy_image(data->mlx, data->img2.img);
 	mlx_destroy_window(data->mlx, data->mlx_win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);

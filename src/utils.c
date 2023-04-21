@@ -16,8 +16,6 @@
 
 void	ft_clear_data(t_data *data)
 {
-	if (data->img2.img)
-		mlx_destroy_image(data->mlx, data->img2.img);
 	if (data->img1.img)
 		mlx_destroy_image(data->mlx, data->img1.img);
 	if (data->mlx_win)
@@ -40,12 +38,27 @@ void	make_point(t_point *p, int l)
 	p->zoom = l / p->ecart;
 }
 
-
-void	init_data(t_data *data, char *name)
+void	what_algo(t_data *data, char *name, char *option)
 {
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		exit(0);
+	if (!ft_strncmp(name, "Mandelbrot", 11) && option == NULL)
+		data->f = &ft_formule_mandelbrot;
+	else if (!ft_strncmp(name, "Mandelbrot", 11) && option != NULL)
+	{
+		if (!ft_strncmp(option, "2", 2))
+			data->f = &ft_formule_mandelbrot;
+		else if (!ft_strncmp(option, "3", 2))
+			data->f = &ft_formule_mandelbrot3;
+		else if (!ft_strncmp(option, "4", 2))
+			data->f = &ft_formule_mandelbrot4;
+		else if (!ft_strncmp(option, "-2", 3))
+			data->f = &ft_formule_mandelbrotn2;
+	}
+	else if (ft_strncmp(name, "Mandelbrot", 11))
+		ft_clear_data(data);
+}
+
+void	define_size(t_data *data)
+{
 	mlx_get_screen_size(data->mlx, &data->width, &data->height);
 	if (data->width > data->height)
 		data->width = data->height;
@@ -55,17 +68,25 @@ void	init_data(t_data *data, char *name)
 	data->width -= 65;
 	data->height = data->height / 100 * 100;
 	data->width = data->width / 100 * 100;
-	data->img1.img = mlx_new_image(data->mlx, data->width, data->height);
+}
+
+void	init_data(t_data *data, char *name, char *option)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		exit(0);
+	define_size(data);
+	what_algo(data, name, option);
+
 	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, name);
 	if (data->mlx_win == NULL)
 		ft_clear_data(data);
+
+	data->img1.img = mlx_new_image(data->mlx, data->width, data->height);
 	if (!data->img1.img)
 	ft_clear_data(data);
 	data->img1.addr = mlx_get_data_addr(data->img1.img, &data->img1.bits_per_pixel, &data->img1.line_length, &data->img1.endian);
-	data->img2.img = mlx_new_image(data->mlx, data->width, data->height);
-	if (!data->img2.img)
-		ft_clear_data(data);
-	data->img2.addr = mlx_get_data_addr(data->img2.img, &data->img2.bits_per_pixel, &data->img2.line_length, &data->img2.endian);
+	
 	make_point(&data->p, data->width);
 	data->max_iteration = 50;
 }

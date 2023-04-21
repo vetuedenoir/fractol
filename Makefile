@@ -16,7 +16,7 @@ RM = rm -f
 
 SRC_DIR = src/
 OBJ_DIR = obj/
-SRC = $(SRC_DIR)fractol.c $(SRC_DIR)utils.c $(SRC_DIR)hook.c $(SRC_DIR)color.c
+SRC = $(SRC_DIR)fractol.c $(SRC_DIR)utils.c $(SRC_DIR)hook.c $(SRC_DIR)color.c $(SRC_DIR)formule.c
 OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 
 NAME = fractol
@@ -29,7 +29,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ) | lib
 	make -C ./minilibx-linux
-	$(CC) $(CFLAGS) ${OBJ} ${MLXPATH} ${LIBPATH} -o ${NAME} -L ./mlx -lX11 -lXext
+	$(CC) $(CFLAGS) ${OBJ} ${MLXPATH} ${LIBPATH} -o ${NAME} -L ./mlx -lX11 -lXext -lm
 	
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER)
