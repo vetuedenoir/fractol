@@ -26,11 +26,11 @@
 
 typedef struct	s_point
 {
-	double	x1;
-	double	x2;
-	double	y1;
-	double	y2;
-	double	ecart;
+	long double	x1;
+	long double	x2;
+	long double	y1;
+	long double	y2;
+	long double	ecart;
 	int	zoom;
 }		t_point;
 

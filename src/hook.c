@@ -14,9 +14,9 @@
 
 void	zoom(t_point *p, int E)
 {
-	double	dif;
+	 long double	dif;
 
-	dif = (p->ecart - ((double)E / (double)p->zoom)) / (double)2;
+	dif = (p->ecart - ((long double)E / (long double)p->zoom)) / (long double)2;
 	if (p->x1 > 0)
 		p->x1 = p->x1 - dif;
 	else
@@ -33,7 +33,7 @@ void	zoom(t_point *p, int E)
 		p->y2 = p->y2 - dif;
 	else
 		p->y2 = p->y2 - dif;
-	p->ecart = (double)E / (double)p->zoom; 
+	p->ecart = (long double)E / (long double)p->zoom; 
 }
 
 
@@ -86,7 +86,10 @@ int	key_hook(int key, t_data *data)
 		exit(0);
 	}
 	if (key == 65451)
-		data->max_iteration = data->max_iteration + 10;
+		data->max_iteration = data->max_iteration + 100;
+	if (key == 65436)
+		data->max_iteration = data->max_iteration + 1000;
+
 	if (key == 65453)
 		data->max_iteration = data->max_iteration - 1;
 	if (key == 65361) // gauche
@@ -97,6 +100,7 @@ int	key_hook(int key, t_data *data)
 		redefinition(&data->p, data->width / 2, data->height / 4 , data->height);
 	if (key == 65364) // bas
 		redefinition(&data->p, data->width / 2, (data->height / 4) * 3, data->height);
+	printf("iteration %d\n", data->max_iteration);
 	mandelbrot(data);
 	return (1);
 }

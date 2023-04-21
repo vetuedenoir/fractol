@@ -14,13 +14,13 @@
 
 
 
-int	ft_formule_mandelbrot(double x, double y, int max_iteration)
+int	ft_formule_mandelbrot(long double x, long double y, int max_iteration)
 {
-	double	c_r;
-	double	c_i;
-	double	z_r;
-	double	z_i;
-	double	tmp;
+	long double	c_r;
+	long double	c_i;
+	long double	z_r;
+	long double	z_i;
+	long double	tmp;
 	int		i;
 
 	c_r = x;
@@ -35,7 +35,14 @@ int	ft_formule_mandelbrot(double x, double y, int max_iteration)
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
-	}
+	}/*
+	while ((z_r * z_r * z_r) + (z_i * z_i * z_i) < 4 && i < max_iteration)
+	{
+		tmp = z_r;
+		z_r = z_r*z_r*z_r - 3*z_r*z_i*z_i + c_r;
+		z_i = 3*tmp*tmp*z_i - z_i*z_i*z_i + c_i;
+		i++;
+	}*/
 	return (i);
 }
 
