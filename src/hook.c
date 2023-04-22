@@ -24,18 +24,18 @@ void	zoom(t_point *p, int E)
 	if (p->x2 > 0)
 		p->x2 = p->x2 - dif;
 	else
-		p->x2 = p->x2 + dif;
+		p->x2 = p->x2 - dif;
 	if (p->y1 > 0)
-		p->y1 = p->y1 - dif;
+		p->y1 = p->y1 + dif;
 	else
-		p->y1 = p->y1 - dif;
+		p->y1 = p->y1 + dif;
 	if (p->y2 > 0)
 		p->y2 = p->y2 - dif;
 	else
 		p->y2 = p->y2 - dif;
 	p->ecart = (long double)E / (long double)p->zoom;
-	printf("Apres zoom : x1 = %.10Lf x2 = %.10Lf et y1 = %.10Lf , y2 = %.10Lf\n", p->x1, p->x2, p->y1, p->y2);
-	printf("ecart = %.10Lf\n\n", p->ecart);
+	//printf("Apres zoom : x1 = %.10Lf x2 = %.10Lf et y1 = %.10Lf , y2 = %.10Lf\n", p->x1, p->x2, p->y1, p->y2);
+	printf("ecart = %.100Lf\n\n", p->ecart);
 }
 
 
@@ -51,7 +51,7 @@ void	redefinition(t_point *p, int x, int y, int E)
 	r = (y - m) * -1;
 	p->y1 = p->y1 + ((double)r / (double)p->zoom);
 	p->y2 = p->y2 + ((double)r / (double)p->zoom);
-	printf("x1 = %.10Lf x2 = %.10Lf et y1 = %.10Lf , y2 = %.10Lf\n", p->x1, p->x2, p->y1, p->y2);
+	//printf("x1 = %.10Lf x2 = %.10Lf et y1 = %.10Lf , y2 = %.10Lf\n", p->x1, p->x2, p->y1, p->y2);
 }
 
 int mouse_hook(int mouse, int x, int y, t_data *data)
@@ -70,7 +70,7 @@ int mouse_hook(int mouse, int x, int y, t_data *data)
 		data->p.zoom = data->p.zoom * 2.0;
 	if (mouse == 3)
 		data->p.zoom = data->p.zoom * 0.5;
-	printf("zoom = %ld\n", data->p.zoom);
+	//printf("zoom = %ld\n", data->p.zoom);
 	zoom(&data->p, data->height);
 	createimg(data, data->f);
 	return (0);
@@ -79,13 +79,14 @@ int mouse_hook(int mouse, int x, int y, t_data *data)
 int	key_hook(int key, t_data *data)
 {
 	printf("%d\n", key);
-	if (key == 65307 || key == 99)
+	if (key == 65307)
+		quit(data);
+	if (key == 115)
 	{
-		mlx_destroy_image(data->mlx, data->img1.img);
-		mlx_destroy_window(data->mlx, data->mlx_win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-		exit(0);
+		if (data->b == 0)
+			data->b = 1;
+		else
+			data->b = 0;
 	}
 	if (key == 65451)
 		data->max_iteration = data->max_iteration + 100;
@@ -102,7 +103,7 @@ int	key_hook(int key, t_data *data)
 		redefinition(&data->p, data->width / 2, data->height / 4 , data->height);
 	if (key == 65364) // bas
 		redefinition(&data->p, data->width / 2, (data->height / 4) * 3, data->height);
-	printf("iteration %d\n", data->max_iteration);
+	//printf("iteration %d\n", data->max_iteration);
 	createimg(data, data->f);
 	return (1);
 }

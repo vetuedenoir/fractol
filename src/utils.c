@@ -53,7 +53,11 @@ void	what_algo(t_data *data, char *name, char *option)
 		else if (!ft_strncmp(option, "-2", 3))
 			data->f = &ft_formule_mandelbrotn2;
 	}
-	else if (ft_strncmp(name, "Mandelbrot", 11))
+	else if (!ft_strncmp(name, "Julia", 6))
+	{
+		data->f = &ft_julia;
+	}
+	else if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6))
 		ft_clear_data(data);
 }
 

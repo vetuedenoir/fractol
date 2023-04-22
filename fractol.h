@@ -20,7 +20,7 @@
 # include <string.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-
+# include <stdbool.h>
 # include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
 
@@ -31,9 +31,18 @@ typedef struct	s_point
 	long double	y1;
 	long double	y2;
 	long double	ecart;
-	long	zoom;
+	unsigned long	zoom;
 }		t_point;
 
+
+typedef struct s_math
+{
+	long double	c_r;
+	long double	c_i;
+	long double	z_r;
+	long double	z_i;
+	long double	tmp;
+}		t_math;
 
 typedef struct	s_data_image
 {
@@ -52,9 +61,12 @@ typedef struct  s_data
 	void		*f;
 	t_data_img	img1;
 	t_point		p;
+	t_math		mt;
 	int			width;
 	int			height;
 	int			max_iteration;
+	bool		b;
+
 }       	t_data;
 
 typedef struct  s_color
@@ -79,12 +91,15 @@ void	loop(t_data *data);
 
 void	mandelbrot(t_data *data);
 void	createimg(t_data *data, int (*f)(long double x, long double y, int max_iteration));
+void	createimg2(t_data *data, int (*f)(long double x, long double y, int max_iteration, t_math t));
 
 int	ft_formule_mandelbrot(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrot3(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrot4(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrotn2(long double x, long double y, int max_iteration);
+int	ft_julia(long double x, long double y, int max_iteration);
 
+void	stringput(t_data *data);
 
 
 #endif
