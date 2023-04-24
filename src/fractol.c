@@ -67,8 +67,6 @@ void	stringput(t_data *data)
 	char	*s;
 	char	*fs;
 
-	if (data->b == 1)
-		return ;
 	s = ft_itoal(data->p.zoom);
 	if (!s)
 		return ;
@@ -122,14 +120,16 @@ void	createimg2(t_data *data , int (*f)(long double x, long double y, int max_it
 		largeur = 0;
 		while (largeur < data->width)
 		{
-			color = data->f((double)largeur / (double)data->p.zoom + data->p.x1, (double)hauteur / (double)data->p.zoom - data->p.y2, data->max_iteration, data->mt);
+			color = f((double)largeur / (double)data->p.zoom + data->p.x1, (double)hauteur / (double)data->p.zoom - data->p.y2, data->max_iteration, data->mt);
 			color_put(data, color, largeur, hauteur);
 			largeur++;
+			//printf("largeur = %d et hauteur = %d\n",largeur, hauteur);
 		}
 		hauteur++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img1.img, 0, 0);
-	stringput(data);
+	if (data->b == 0)
+		stringput(data);
 }
 
 int	main(int argc, char *argv[])
@@ -138,12 +138,11 @@ int	main(int argc, char *argv[])
 	
 	if (argc == 1)
 		return (1);
-	if (!argv[1])
-		return (1);
-	init_data(&data, argv[1], argv[2]);
+	init_data(&data, argv[1], argv[2], argv[3]);
 	if (!ft_strncmp(argv[1], "Julia", 6))
 		createimg2(&data, data.f);
 	else
 		createimg(&data, data.f);
 	loop(&data);
+	return (1);
 }

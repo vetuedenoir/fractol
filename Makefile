@@ -16,7 +16,8 @@ RM = rm -f
 
 SRC_DIR = src/
 OBJ_DIR = obj/
-SRC = $(SRC_DIR)fractol.c $(SRC_DIR)utils.c $(SRC_DIR)hook.c $(SRC_DIR)color.c $(SRC_DIR)formule.c
+SRC = $(SRC_DIR)fractol.c $(SRC_DIR)utils.c $(SRC_DIR)hook.c $(SRC_DIR)color.c\
+	 $(SRC_DIR)formule.c  $(SRC_DIR)ft_atolf.c
 OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 
 NAME = fractol

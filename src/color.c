@@ -17,7 +17,7 @@ void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 	t_color color;
 	
 	
-	if (iteration == data->max_iteration)
+	if (iteration == data->max_iteration || iteration == 0)
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, 0xFF000000);
 	else
 	{	while (iteration > 0)

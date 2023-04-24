@@ -38,8 +38,8 @@ int	ft_julia(long double x, long double y, int max_iteration, t_math t)
 {
 	int		i;
 
-    t.c_r = -0.4;
-	t.c_i = 0.6;
+   	//t.c_r = -0.4;
+	//t.c_i = 0.6;
 	t.z_r = x;
 	t.z_i = y;
 	i = 0;

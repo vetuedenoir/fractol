@@ -72,7 +72,10 @@ int mouse_hook(int mouse, int x, int y, t_data *data)
 		data->p.zoom = data->p.zoom * 0.5;
 	//printf("zoom = %ld\n", data->p.zoom);
 	zoom(&data->p, data->height);
-	createimg(data, data->f);
+	if (data->f == &createimg)
+		createimg(data, data->f);
+	else
+		createimg2(data, data->f);
 	return (0);
 }
 
@@ -104,7 +107,11 @@ int	key_hook(int key, t_data *data)
 	if (key == 65364) // bas
 		redefinition(&data->p, data->width / 2, (data->height / 4) * 3, data->height);
 	//printf("iteration %d\n", data->max_iteration);
-	createimg(data, data->f);
+	if (data->f == &createimg)
+		createimg(data, data->f);
+	else
+		createimg2(data, data->f);
+
 	return (1);
 }
 

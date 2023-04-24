@@ -14,7 +14,6 @@
 # define FRACTOL_H
 
 # include <math.h>
-# include <tgmath.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -81,7 +80,7 @@ void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 int		makecolor(int t, int rouge, int green, int blue);
 void	color_put(t_data *data, int iteration, int largeur, int hauteur);
 
-void	init_data(t_data *data, char *name, char *option);
+void	init_data(t_data *data, char *name, char *option, char *option2);
 void	ft_clear_data(t_data *data);
 int		quit(t_data *data);
 
@@ -97,9 +96,10 @@ int	ft_formule_mandelbrot(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrot3(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrot4(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrotn2(long double x, long double y, int max_iteration);
-int	ft_julia(long double x, long double y, int max_iteration);
+int	ft_julia(long double x, long double y, int max_iteration, t_math t);
 
 void	stringput(t_data *data);
+long double	ft_atolf(char *str);
 
 
 #endif

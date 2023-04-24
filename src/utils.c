@@ -38,7 +38,7 @@ void	make_point(t_point *p, int l)
 	p->zoom = l / p->ecart;
 }
 
-void	what_algo(t_data *data, char *name, char *option)
+void	what_algo(t_data *data, char *name, char *option, char *option2)
 {
 	if (!ft_strncmp(name, "Mandelbrot", 11) && option == NULL)
 		data->f = &ft_formule_mandelbrot;
@@ -56,6 +56,17 @@ void	what_algo(t_data *data, char *name, char *option)
 	else if (!ft_strncmp(name, "Julia", 6))
 	{
 		data->f = &ft_julia;
+		if (option && option2)
+		{
+			data->mt.c_r = ft_atolf(option);
+			data->mt.c_i = ft_atolf(option2);
+		}
+		else
+		{
+			data->mt.c_r = 1;
+			data->mt.c_i = 1;
+		}
+
 	}
 	else if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6))
 		ft_clear_data(data);
@@ -74,13 +85,13 @@ void	define_size(t_data *data)
 	data->width = data->width / 100 * 100;
 }
 
-void	init_data(t_data *data, char *name, char *option)
+void	init_data(t_data *data, char *name, char *option, char *option2)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(0);
 	define_size(data);
-	what_algo(data, name, option);
+	what_algo(data, name, option, option2);
 
 	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, name);
 	if (data->mlx_win == NULL)
