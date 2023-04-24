@@ -105,7 +105,8 @@ void	createimg(t_data *data , int (*f)(long double x, long double y, int max_ite
 		hauteur++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img1.img, 0, 0);
-	stringput(data);
+	if (data->b == 0)
+		stringput(data);
 }
 
 void	createimg2(t_data *data , int (*f)(long double x, long double y, int max_iteration, t_math t))
@@ -136,7 +137,7 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 	
-	if (argc == 1)
+	if (argc == 1 || argc > 4)
 		return (1);
 	init_data(&data, argv[1], argv[2], argv[3]);
 	if (!ft_strncmp(argv[1], "Julia", 6))

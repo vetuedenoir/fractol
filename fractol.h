@@ -97,6 +97,7 @@ int	ft_formule_mandelbrot3(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrot4(long double x, long double y, int max_iteration);
 int	ft_formule_mandelbrotn2(long double x, long double y, int max_iteration);
 int	ft_julia(long double x, long double y, int max_iteration, t_math t);
+int	ft_burning_ship(long double x, long double y, int max_iteration);
 
 void	stringput(t_data *data);
 long double	ft_atolf(char *str);

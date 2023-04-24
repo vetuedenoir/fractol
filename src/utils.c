@@ -46,12 +46,14 @@ void	what_algo(t_data *data, char *name, char *option, char *option2)
 	{
 		if (!ft_strncmp(option, "2", 2))
 			data->f = &ft_formule_mandelbrot;
-		else if (!ft_strncmp(option, "3", 2))
+		if (!ft_strncmp(option, "3", 2))
 			data->f = &ft_formule_mandelbrot3;
-		else if (!ft_strncmp(option, "4", 2))
+		if (!ft_strncmp(option, "4", 2))
 			data->f = &ft_formule_mandelbrot4;
-		else if (!ft_strncmp(option, "-2", 3))
+		if (!ft_strncmp(option, "-2", 3))
 			data->f = &ft_formule_mandelbrotn2;
+		else
+			ft_clear_data(data);
 	}
 	else if (!ft_strncmp(name, "Julia", 6))
 	{
@@ -63,14 +65,19 @@ void	what_algo(t_data *data, char *name, char *option, char *option2)
 		}
 		else
 		{
-			data->mt.c_r = 1;
-			data->mt.c_i = 1;
+			data->mt.c_r = 0.1;
+			data->mt.c_i = -0.625;
 		}
 
+	}
+	else if (!ft_strncmp(name, "Burning_ship", 13))
+	{
+		data->f = &ft_burning_ship;
 	}
 	else if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6))
 		ft_clear_data(data);
 }
+
 
 void	define_size(t_data *data)
 {
@@ -87,6 +94,7 @@ void	define_size(t_data *data)
 
 void	init_data(t_data *data, char *name, char *option, char *option2)
 {
+	ft_memset(data, 0, sizeof(t_data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(0);

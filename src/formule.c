@@ -12,6 +12,13 @@
 
 #include "../fractol.h"
 
+long double	ft_abs(long double n)
+{
+	if (n < 0)
+		n *= -1;
+	return (n);
+}
+
 int	ft_formule_mandelbrot(long double x, long double y, int max_iteration)
 {
 	t_math	t;
@@ -32,6 +39,26 @@ int	ft_formule_mandelbrot(long double x, long double y, int max_iteration)
 		i++;
 	}
 	return (i);
+}
+
+int	ft_burning_ship(long double x, long double y, int max_iteration)
+{
+	t_math	t;
+	int		i;
+
+	t.c_r = x;
+	t.c_i = y;
+	t.z_r = 0;
+	t.z_i = 0;
+	i = 0;
+	while (t.z_r * t.z_r + t.z_i * t.z_i <= 4 && i < max_iteration)
+	{
+		t.tmp = t.z_r * t.z_r - t.z_i * t.z_i + t.c_r;
+		t.z_i = 2 * ft_abs(t.z_r * t.z_i) + t.c_i;
+		t.z_r = t.tmp;
+		i++;
+	}
+	return (1);
 }
 
 int	ft_julia(long double x, long double y, int max_iteration, t_math t)
