@@ -81,6 +81,8 @@ int mouse_hook(int mouse, int x, int y, t_data *data)
 
 int	key_hook(int key, t_data *data)
 {
+	static	int coef = 1;
+
 	printf("%d\n", key);
 	if (key == 65307)
 		quit(data);
@@ -91,13 +93,27 @@ int	key_hook(int key, t_data *data)
 		else
 			data->b = 0;
 	}
+	if (key == 65450)
+	{
+		coef *= 10;
+		return (1);
+	}
+	if (key == 65455)
+	{
+		if (coef >= 10)
+			coef /= 10;
+		return (1);
+	}
 	if (key == 65451)
-		data->max_iteration = data->max_iteration + 100;
-	if (key == 65436)
-		data->max_iteration = data->max_iteration + 1000;
+		data->max_iteration = data->max_iteration + coef;
 
 	if (key == 65453)
-		data->max_iteration = data->max_iteration - 1;
+	{
+		if (data->max_iteration - coef <= 0)
+			data->max_iteration = 1;
+		else
+			data->max_iteration = data->max_iteration - coef;
+	}
 	if (key == 65361) // gauche
 		redefinition(&data->p, data->width / 4, data->height / 2 , data->height);
 	if (key == 65363) // droite

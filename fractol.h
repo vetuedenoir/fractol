@@ -101,6 +101,7 @@ int	ft_burning_ship(long double x, long double y, int max_iteration);
 
 void	stringput(t_data *data);
 long double	ft_atolf(char *str);
+void	bad_arg(t_data *data, bool b);
 
 
 #endif

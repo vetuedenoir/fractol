@@ -137,8 +137,9 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 	
+	ft_memset(&data, 0, sizeof(t_data));
 	if (argc == 1 || argc > 4)
-		return (1);
+		bad_arg(&data, 1);
 	init_data(&data, argv[1], argv[2], argv[3]);
 	if (!ft_strncmp(argv[1], "Julia", 6))
 		createimg2(&data, data.f);

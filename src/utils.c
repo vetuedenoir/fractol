@@ -14,19 +14,7 @@
 
 
 
-void	ft_clear_data(t_data *data)
-{
-	if (data->img1.img)
-		mlx_destroy_image(data->mlx, data->img1.img);
-	if (data->mlx_win)
-		mlx_destroy_window(data->mlx, data->mlx_win);
-	if (data->mlx)
-	{
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
-	exit (0);
-}
+
 
 void	make_point(t_point *p, int l)
 {
@@ -53,7 +41,7 @@ void	what_algo(t_data *data, char *name, char *option, char *option2)
 		if (!ft_strncmp(option, "-2", 3))
 			data->f = &ft_formule_mandelbrotn2;
 		else
-			ft_clear_data(data);
+			bad_arg(data, 1);
 	}
 	else if (!ft_strncmp(name, "Julia", 6))
 	{
@@ -62,11 +50,14 @@ void	what_algo(t_data *data, char *name, char *option, char *option2)
 		{
 			data->mt.c_r = ft_atolf(option);
 			data->mt.c_i = ft_atolf(option2);
+			if ((data->mt.c_r == 0 && option[0] != 48) || (data->mt.c_i == 0 && option2[0] != 48))
+				bad_arg(data, 1);
 		}
 		else
 		{
 			data->mt.c_r = 0.1;
 			data->mt.c_i = -0.625;
+			bad_arg(data, 0);
 		}
 
 	}
@@ -75,7 +66,7 @@ void	what_algo(t_data *data, char *name, char *option, char *option2)
 		data->f = &ft_burning_ship;
 	}
 	else if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6))
-		ft_clear_data(data);
+		bad_arg(data, 1);
 }
 
 
@@ -94,7 +85,6 @@ void	define_size(t_data *data)
 
 void	init_data(t_data *data, char *name, char *option, char *option2)
 {
-	ft_memset(data, 0, sizeof(t_data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(0);
