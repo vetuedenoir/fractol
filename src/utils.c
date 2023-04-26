@@ -34,11 +34,11 @@ void	what_algo(t_data *data, char *name, char *option, char *option2)
 	{
 		if (!ft_strncmp(option, "2", 2))
 			data->f = &ft_formule_mandelbrot;
-		if (!ft_strncmp(option, "3", 2))
+		else if (!ft_strncmp(option, "3", 2))
 			data->f = &ft_formule_mandelbrot3;
-		if (!ft_strncmp(option, "4", 2))
+		else if (!ft_strncmp(option, "4", 2))
 			data->f = &ft_formule_mandelbrot4;
-		if (!ft_strncmp(option, "-2", 3))
+		else if (!ft_strncmp(option, "-2", 3))
 			data->f = &ft_formule_mandelbrotn2;
 		else
 			bad_arg(data, 1);

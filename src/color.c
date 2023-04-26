@@ -14,7 +14,7 @@
 
 void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 {
-	//t_color color;
+	t_color color;
 	
 	if (iteration == data->max_iteration)
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, 0xFF000000);
@@ -22,8 +22,8 @@ void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, 0xFFFF1919);
 	else
 	{	
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, (3* iteration) % 256, (1 * iteration) % 256, (10 * iteration) % 256));
-	/*
+	//	my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, (3* iteration) % 256, (1 * iteration) % 256, (10 * iteration) % 256));
+	
 
 		while (iteration > 0)
 		{
@@ -165,7 +165,7 @@ void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 		iteration -= 25;
 		}
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(color.t, color.r, color.g, color.b));
-	*/
+	
 	}
 }
 
