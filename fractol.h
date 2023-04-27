@@ -65,6 +65,7 @@ typedef struct  s_data
 	int			height;
 	int			max_iteration;
 	bool		b;
+	char		fc;
 
 }       	t_data;
 
@@ -79,6 +80,7 @@ typedef struct  s_color
 void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 int		makecolor(int t, int rouge, int green, int blue);
 void	color_put(t_data *data, int iteration, int largeur, int hauteur);
+void	ft_color_original(t_data *data, int iteration, int largeur, int hauteur);
 
 void	init_data(t_data *data, char *name, char *option, char *option2);
 void	ft_clear_data(t_data *data);
