@@ -1,105 +1,118 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kscordel <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 15:01:19 by kscordel          #+#    #+#             */
-/*   Updated: 2023/04/10 15:01:54 by kscordel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../fractol.h"
 
-
-
-
-
-void	make_point(t_point *p, int l)
+static void	lennb(unsigned long nb, int *t)
 {
-	p->x1 = -2;
-	p->x2 = 2;
-	p->y1 = -2;
-	p->y2 = 2;
-	p->ecart = 4;
-	p->zoom = l / p->ecart;
-}
+	int	i;
 
-void	what_algo(t_data *data, char *name, char *option, char *option2)
-{
-	if (!ft_strncmp(name, "Mandelbrot", 11) && option == NULL)
-		data->f = &ft_formule_mandelbrot;
-	else if (!ft_strncmp(name, "Mandelbrot", 11) && option != NULL)
-	{
-		if (!ft_strncmp(option, "2", 2))
-			data->f = &ft_formule_mandelbrot;
-		else if (!ft_strncmp(option, "3", 2))
-			data->f = &ft_formule_mandelbrot3;
-		else if (!ft_strncmp(option, "4", 2))
-			data->f = &ft_formule_mandelbrot4;
-		else if (!ft_strncmp(option, "-2", 3))
-			data->f = &ft_formule_mandelbrotn2;
-		else
-			bad_arg(data, 1);
-	}
-	else if (!ft_strncmp(name, "Julia", 6))
-	{
-		data->f = &ft_julia;
-		if (option && option2)
-		{
-			data->mt.c_r = ft_atolf(option);
-			data->mt.c_i = ft_atolf(option2);
-			if ((data->mt.c_r == 0 && option[0] != 48) || (data->mt.c_i == 0 && option2[0] != 48))
-				bad_arg(data, 1);
-		}
-		else
-		{
-			data->mt.c_r = 0.1;
-			data->mt.c_i = -0.625;
-			bad_arg(data, 0);
-		}
-
-	}
-	else if (!ft_strncmp(name, "Burning_ship", 13))
-	{
-		data->f = &ft_burning_ship;
-	}
-	else if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6))
-		bad_arg(data, 1);
-}
-
-
-void	define_size(t_data *data)
-{
-	mlx_get_screen_size(data->mlx, &data->width, &data->height);
-	if (data->width > data->height)
-		data->width = data->height;
+	i = 0;
+	if (nb == 0)
+		*t = *t + 1;
 	else
-		data->height = data->width;
-	data->height -= 65;
-	data->width -= 65;
-	data->height = data->height / 100 * 100;
-	data->width = data->width / 100 * 100;
+	{
+		while (nb != 0)
+		{
+			nb /= 10;
+			*t = *t + 1;
+			i++;
+			if (i % 3 == 0)
+				*t = *t + 1;
+		}
+		if (i % 3 == 0)
+			*t = *t - 1;
+	}
 }
 
-void	init_data(t_data *data, char *name, char *option, char *option2)
+char	*ft_itoal(unsigned long nb)
 {
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		exit(0);
-	define_size(data);
-	what_algo(data, name, option, option2);
+	int		t;
+	int		i;
+	char	*str;
 
-	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, name);
-	if (data->mlx_win == NULL)
-		ft_clear_data(data);
+	t = 0;
+	i = 1;
+	lennb(nb, &t);
+	str = malloc(sizeof(char) * (t + 1));
+	if (str == NULL)
+		return (NULL);
+	str[t] = '\0';
+	while (t > 0)
+	{
+		t--;
+		if (t > 0 && i % 4 == 0)
+			str[t] = 32;
+		else
+		{
+			str[t] = nb % 10 + 48;
+			nb /= 10;
+		}
+		i++;
+	}
+	return (str);
+}
 
-	data->img1.img = mlx_new_image(data->mlx, data->width, data->height);
-	if (!data->img1.img)
-	ft_clear_data(data);
-	data->img1.addr = mlx_get_data_addr(data->img1.img, &data->img1.bits_per_pixel, &data->img1.line_length, &data->img1.endian);
+void	stringput(t_data *data)
+{
+	char	*s;
+	char	*fs;
+
+	s = ft_itoal(data->p.zoom);
+	if (!s)
+		return ;
+	fs = ft_strjoin("ZOOM * ", s);
+	free(s);
+	if (fs)
+		mlx_string_put(data->mlx, data->mlx_win, 0, 10, 0x808080, fs);
+	free(fs);
+	s = ft_itoal(data->max_iteration);
+	if (!s)
+		return ;
+	fs = ft_strjoin("max_iteration = ", s);
+	free(s);
+	if (fs)
+		mlx_string_put(data->mlx, data->mlx_win, 0, 20, 0x808080, fs);
+	free(fs);
+}
+
+long	midatolf(char *str, int *i, int *signe)
+{
+	long	l;
 	
-	make_point(&data->p, data->width);
-	data->max_iteration = 50;
+	l = 0.0;
+	while (str[*i] == 32 || (str[*i] <= 13 && str[*i] >= 9))
+		*i = *i + 1;
+	if (str[*i] == '-' || str[*i] == '+')
+	{
+		if (str[*i] == '-')
+			*signe = -1;
+		*i = *i + 1;
+	}
+	while (str[*i] >= '0' && str[*i] <= '9')
+	{
+		l = l * 10 + str[*i] - 48;
+		*i = *i + 1;
+	}
+	if (str[*i] == '.' && str[*i + 1] >= '0' && str[*i + 1] <= '9')
+		*i = *i + 1;
+	while (str[*i + 1] >= '0' && str[*i + 1] <= '9')
+		*i = *i + 1;
+	return (l);
+}
+
+long double	ft_atolf(char *str)
+{
+	long double	r;
+	long	l;
+	int	i;
+	int	signe;
+
+	signe = 1;
+	r = 0.0;
+	i = 0;
+	l = midatolf(str, &i, &signe);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		r = r / 10.0 + str[i] - 48;
+		i--;
+	}
+	return (((double)l + r / 10) * signe);
 }

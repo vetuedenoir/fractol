@@ -13,10 +13,10 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include <limits.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <stdbool.h>
@@ -77,33 +77,41 @@ typedef struct  s_color
 	int	b;
 }       	t_color;
 
-void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
-int		makecolor(int t, int rouge, int green, int blue);
-void	color_put(t_data *data, int iteration, int largeur, int hauteur);
-void	ft_color_original(t_data *data, int iteration, int largeur, int hauteur);
+//Initialisation
+void	init_data(t_data *data, char *name, char **option);
+void	what_algo(t_data *data, char *name, char **option);
 
-void	init_data(t_data *data, char *name, char *option, char *option2);
-void	ft_clear_data(t_data *data);
-int		quit(t_data *data);
+//Formule
+int	ft_formule_mandelbrot(long double x, long double y, int max_iteration, t_math t);
+int	ft_formule_mandelbrotn2(long double x, long double y, int max_iteration, t_math t);
+int	ft_formule_mandelbrot3(long double x, long double y, int max_iteration, t_math t);
+int	ft_julia(long double x, long double y, int max_iteration, t_math t);
+int	ft_burning_ship(long double x, long double y, int max_iteration, t_math t);
 
+//Affichage
+void	createimg(t_data *data, int (*f)(long double x, long double y, int max_iteration, t_math t));
+void	stringput(t_data *data);
+
+//Gestion graphique
 int		key_hook(int key, t_data *data);
 int		mouse_hook(int mouse, int x, int y, t_data *data);
-void	loop(t_data *data);
+void	redefinition(t_point *p, int x, int y, int E);
+void	zoom(t_point *p, int E);
 
-void	mandelbrot(t_data *data);
-void	createimg(t_data *data, int (*f)(long double x, long double y, int max_iteration));
-void	createimg2(t_data *data, int (*f)(long double x, long double y, int max_iteration, t_math t));
+//Couleur
+int		makecolor(int t, int red, int green, int blue);
+void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
+void	color_put(t_data *data, int iteration, int largeur, int hauteur);
+void	ft_color_original(t_data *data, int iteration, int largeur, int hauteur);
+void	original5(t_color *color, int *iteration);
+void	original6(t_color *color, int *iteration);
 
-int	ft_formule_mandelbrot(long double x, long double y, int max_iteration);
-int	ft_formule_mandelbrot3(long double x, long double y, int max_iteration);
-int	ft_formule_mandelbrot4(long double x, long double y, int max_iteration);
-int	ft_formule_mandelbrotn2(long double x, long double y, int max_iteration);
-int	ft_julia(long double x, long double y, int max_iteration, t_math t);
-int	ft_burning_ship(long double x, long double y, int max_iteration);
-
-void	stringput(t_data *data);
-long double	ft_atolf(char *str);
+//End
+void	ft_clear_data(t_data *data);
 void	bad_arg(t_data *data, bool b);
+int		quit(t_data *data);
 
+
+long double	ft_atolf(char *str);
 
 #endif

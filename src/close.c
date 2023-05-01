@@ -26,13 +26,13 @@ void	ft_clear_data(t_data *data)
 	exit (0);
 }
 
-void	bad_arg(t_data *data, bool l)
+void	bad_arg2(void)
 {
 	ft_printf("Mode d'emploie :\n");
 	ft_printf("\t1) Ecrire ./fractol suivie des arguments suivant\n");
-	ft_printf("\t - Mandelbrot soit Julia ou Burning_ship\n");
-	ft_printf("\t - Mandelbrot peut etre suivie de 2 ou 3 pour avoir\
- les differentes variable\n");
+	ft_printf("\t - Mandelbrot, Julia ou Burning_ship\n");
+	ft_printf("\t - Mandelbrot peut etre suivie de 2, 3 ou -2 pour avoir\
+ les differentes variantes\n");
 	ft_printf("\t\texemple : ./fractol Mandelbrot 3\n");
 	ft_printf("\t - Julia peut etre suivie de 2 argument\n");
 	ft_printf("\t ->\tLe premier est un nombre representant la partie\
@@ -40,7 +40,20 @@ void	bad_arg(t_data *data, bool l)
 	ft_printf("\t ->\tLe deuxieme est un nombre representant la partie\
  imaginaire de c\n");
 	ft_printf("\t\texemple : ./fractol Julia -0.76 0.12\n\n");
-	ft_printf("\t2) Les deplacement et ajustement\n");
+	ft_printf("\t2) Les couleurs\n");
+	ft_printf("\t - Il y a 4 palettes de couleurs differente\n");
+	ft_printf("\t - original > par default\n");
+	ft_printf("\t - d_red\n");
+	ft_printf("\t - d_green\n");
+	ft_printf("\t - d_blue\n");
+	ft_printf("\t - Les couleurs doivent etre specifier apres le 1 er arguments\n");
+	ft_printf("\t\texemple : ./fractol Julia d_red 0.38 -0.0128\n\n");
+}
+
+void	bad_arg(t_data *data, bool l)
+{
+	bad_arg2();
+	ft_printf("\t3) Les deplacement et ajustement\n");
 	ft_printf("\t - Vous pouvez faire des petits zooms et dezoom avec la molette\
 	de la souris\n\t   mais aussi des grands zooms avec le clic gauche\
  et des grands dezoom avec le clic drois\n");
