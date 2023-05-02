@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redefinition.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kscordel <kscordel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/02 16:22:56 by kscordel          #+#    #+#             */
+/*   Updated: 2023/05/02 16:44:25 by kscordel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../fractol.h"
 
 void	zoom(t_point *p, int E)
 {
-	 long double	dif;
+	long double	dif;
 
 	dif = (p->ecart - ((long double)E / (long double)p->zoom)) / (long double)2;
 	if (p->x1 > 0)
@@ -24,7 +36,6 @@ void	zoom(t_point *p, int E)
 	p->ecart = (long double)E / (long double)p->zoom;
 }
 
-
 void	redefinition(t_point *p, int x, int y, int E)
 {
 	int	m;
@@ -38,4 +49,3 @@ void	redefinition(t_point *p, int x, int y, int E)
 	p->y1 = p->y1 + ((double)r / (double)p->zoom);
 	p->y2 = p->y2 + ((double)r / (double)p->zoom);
 }
-

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kscordel <kscordel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/02 16:22:42 by kscordel          #+#    #+#             */
+/*   Updated: 2023/05/02 16:26:49 by kscordel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../fractol.h"
 
 char	what_color(t_data *data, char *option)
@@ -46,7 +58,7 @@ void	init_mandelbrot(t_data *data, char **option)
 			data->f = &ft_formule_mandelbrot;
 		else if (!ft_strncmp(option[1], "3", 2))
 			data->f = &ft_formule_mandelbrot3;
-		else if (!ft_strncmp(option[1],"-2", 2))
+		else if (!ft_strncmp(option[1], "-2", 2))
 			data->f = &ft_formule_mandelbrotn2;
 		else
 			bad_arg(data, 1);
@@ -68,7 +80,8 @@ void	init_julia(t_data *data, char **option)
 			bad_arg(data, 1);
 		data->mt.c_r = ft_atolf(option[0]);
 		data->mt.c_i = ft_atolf(option[1]);
-		if ((data->mt.c_r == 0 && option[0][0] != 48) || (data->mt.c_i == 0 && option[1][0] != 48))
+		if ((data->mt.c_r == 0 && option[0][0] != 48) || (data->mt.c_i == 0 && \
+		option[1][0] != 48))
 			bad_arg(data, 1);
 	}
 	if (option[0] && option[1] && option[2])
@@ -77,10 +90,10 @@ void	init_julia(t_data *data, char **option)
 			bad_arg(data, 1);
 		data->mt.c_r = ft_atolf(option[1]);
 		data->mt.c_i = ft_atolf(option[2]);
-		if ((data->mt.c_r == 0 && option[1][0] != 48) || (data->mt.c_i == 0 && option[2][0] != 48))
+		if ((data->mt.c_r == 0 && option[1][0] != 48) || (data->mt.c_i == 0 && \
+		option[2][0] != 48))
 			bad_arg(data, 1);
 	}	
-	
 }
 
 void	what_algo(t_data *data, char *name, char **option)
@@ -89,7 +102,7 @@ void	what_algo(t_data *data, char *name, char **option)
 	{
 		data->f = &ft_formule_mandelbrot;
 		if (option[0] == NULL)
-			data->fc = 0; // couleur par default
+			data->fc = 0;
 		init_mandelbrot(data, option);
 	}
 	else if (!ft_strncmp(name, "Julia", 6))
@@ -105,4 +118,3 @@ void	what_algo(t_data *data, char *name, char **option)
 	else if (!ft_strncmp(name, "Burning_ship", 13))
 		init_burning_ship(data, option);
 }
-

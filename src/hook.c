@@ -14,8 +14,8 @@
 
 void	mouse2(int mouse, t_data *data)
 {
-	unsigned long s;
-	
+	unsigned long	s;
+
 	if (mouse == 4)
 	{
 		s = data->p.zoom * 0.05;
@@ -33,11 +33,11 @@ void	mouse2(int mouse, t_data *data)
 	}
 }
 
-int mouse_hook(int mouse, int x, int y, t_data *data)
+int	mouse_hook(int mouse, int x, int y, t_data *data)
 {
 	if (mouse != 4 && mouse != 5 && mouse != 1 && mouse != 3)
 		return (1);
-	redefinition(&data->p, x, y , data->height);
+	redefinition(&data->p, x, y, data->height);
 	mouse2(mouse, data);
 	if (mouse == 1)
 	{
@@ -60,8 +60,8 @@ int mouse_hook(int mouse, int x, int y, t_data *data)
 
 int	key2(int key, t_data *data)
 {
-	static	int coef = 1;
-	
+	static int	coef = 1;
+
 	if (key == 65450)
 	{
 		coef *= 10;
@@ -75,7 +75,6 @@ int	key2(int key, t_data *data)
 	}
 	if (key == 65451)
 		data->max_iteration = data->max_iteration + coef;
-
 	if (key == 65453)
 	{
 		if (data->max_iteration - coef <= 0)
@@ -100,13 +99,17 @@ int	key_hook(int key, t_data *data)
 	if (key2(key, data))
 		return (1);
 	if (key == 65361)
-		redefinition(&data->p, data->width / 4, data->height / 2 , data->height);
+		redefinition(&data->p, data->width / 4, data->height / 2, \
+		data->height);
 	if (key == 65363)
-		redefinition(&data->p, (data->width / 4) * 3, data->height / 2 , data->height);
+		redefinition(&data->p, (data->width / 4) * 3, data->height / 2, \
+		data->height);
 	if (key == 65362)
-		redefinition(&data->p, data->width / 2, data->height / 4 , data->height);
+		redefinition(&data->p, data->width / 2, data->height / 4, \
+		data->height);
 	if (key == 65364)
-		redefinition(&data->p, data->width / 2, (data->height / 4) * 3, data->height);
+		redefinition(&data->p, data->width / 2, (data->height / 4) * 3, \
+		data->height);
 	createimg(data, data->f);
 	return (1);
 }
@@ -119,4 +122,3 @@ int	quit(t_data *data)
 	free(data->mlx);
 	exit (0);
 }
-

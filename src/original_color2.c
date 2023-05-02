@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   original_color2.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kscordel <kscordel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/02 16:22:51 by kscordel          #+#    #+#             */
+/*   Updated: 2023/05/02 16:43:04 by kscordel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../fractol.h"
 
 void	original5(t_color *color, int *iteration)
@@ -23,7 +35,7 @@ void	original5(t_color *color, int *iteration)
 		color->b -= (*iteration * 2);
 		color->g -= (*iteration * 2);
 	}
-	*iteration = *iteration - 51;	
+	*iteration = *iteration - 51;
 	if (*iteration > 0 && *iteration >= 64)
 		color->b -= 127;
 }
@@ -45,4 +57,3 @@ void	original6(t_color *color, int *iteration)
 	}
 	*iteration = *iteration - 25;
 }
-

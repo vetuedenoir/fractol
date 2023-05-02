@@ -12,19 +12,29 @@
 
 #include "../fractol.h"
 
-void	createimg(t_data *data , int (*f)(long double x, long double y, int max_iteration, t_math t))
+long double	ft_abs(long double n)
+{
+	if (n < 0)
+		n *= -1;
+	return (n);
+}
+
+void	createimg(t_data *data, int (*f)(long double x, long double y,
+int max_iteration, t_math t))
 {
 	int		largeur;
 	int		hauteur;
 	int		color;
-	
+
 	hauteur = 0;
 	while (hauteur < data->height)
 	{
 		largeur = 0;
 		while (largeur < data->width)
 		{
-			color = f((double)largeur / (double)data->p.zoom + data->p.x1, (double)hauteur / (double)data->p.zoom - data->p.y2, data->max_iteration, data->mt);
+			color = f((double)largeur / (double)data->p.zoom + data->p.x1,
+					(double)hauteur / (double)data->p.zoom - data->p.y2,
+					data->max_iteration, data->mt);
 			color_put(data, color, largeur, hauteur);
 			largeur++;
 		}
@@ -38,7 +48,7 @@ void	createimg(t_data *data , int (*f)(long double x, long double y, int max_ite
 int	main(int argc, char *argv[])
 {
 	t_data	data;
-	
+
 	ft_memset(&data, 0, sizeof(t_data));
 	if (argc == 1 || argc > 5)
 		bad_arg(&data, 1);

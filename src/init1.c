@@ -41,19 +41,18 @@ void	init_data(t_data *data, char *name, char **option)
 	if (!data->mlx)
 		exit(0);
 	define_size(data);
-	if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6) && ft_strncmp(name, "Burning_ship", 13))
+	if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6) && \
+	ft_strncmp(name, "Burning_ship", 13))
 		bad_arg(data, 1);
 	what_algo(data, name, option);
-
 	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, name);
 	if (data->mlx_win == NULL)
 		ft_clear_data(data);
-
 	data->img1.img = mlx_new_image(data->mlx, data->width, data->height);
 	if (!data->img1.img)
-	ft_clear_data(data);
-	data->img1.addr = mlx_get_data_addr(data->img1.img, &data->img1.bits_per_pixel, &data->img1.line_length, &data->img1.endian);
-	
+		ft_clear_data(data);
+	data->img1.addr = mlx_get_data_addr(data->img1.img, \
+	&data->img1.bits_per_pixel, &data->img1.line_length, &data->img1.endian);
 	make_point(&data->p, data->width);
 	data->max_iteration = 50;
 }

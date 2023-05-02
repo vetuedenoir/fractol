@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kscordel <kscordel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/02 16:22:32 by kscordel          #+#    #+#             */
+/*   Updated: 2023/05/02 16:45:11 by kscordel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../fractol.h"
 
 static void	lennb(unsigned long nb, int *t)
@@ -76,7 +88,7 @@ void	stringput(t_data *data)
 long	midatolf(char *str, int *i, int *signe)
 {
 	long	l;
-	
+
 	l = 0.0;
 	while (str[*i] == 32 || (str[*i] <= 13 && str[*i] >= 9))
 		*i = *i + 1;
@@ -101,9 +113,9 @@ long	midatolf(char *str, int *i, int *signe)
 long double	ft_atolf(char *str)
 {
 	long double	r;
-	long	l;
-	int	i;
-	int	signe;
+	long		l;
+	int			i;
+	int			signe;
 
 	signe = 1;
 	r = 0.0;

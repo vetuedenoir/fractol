@@ -22,19 +22,23 @@ void	color_put(t_data *data, int iteration, int largeur, int hauteur)
 	if (iteration == data->max_iteration)
 		my_mlx_pixel_put(&data->img1, largeur, hauteur, 0xFF000000);
 	else if (data->fc == 1)
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, (2 * iteration) % 256 + 50, (iteration) % 512 / 10, (iteration) % 256 /3));
+		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, \
+		(2 * iteration) % 256 + 50, (iteration) % 512 / 10, \
+		(iteration) % 256 / 3));
 	else if (data->fc == 2)
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, (iteration % 512) / 2, (2* iteration % 512) + 50, (iteration % 512) / 4));
+		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, \
+		(iteration % 512) / 2, (2 * iteration % 512) + 50, \
+		(iteration % 512) / 4));
 	else if (data->fc == 3)
-		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, (iteration % 512) / 2, (iteration % 512), (iteration) % 256 + 40));
-
+		my_mlx_pixel_put(&data->img1, largeur, hauteur, makecolor(255, \
+		(iteration % 512) / 2, (iteration % 512), (iteration) % 256 + 40));
 }
 
 int	makecolor(int t, int red, int green, int blue)
 {
 	if (red > 255)
 		red = 255;
-	if ( green > 255)
+	if (green > 255)
 		green = 255;
 	if (blue > 255)
 		blue = 255;
@@ -45,6 +49,7 @@ void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color)
 {
 	char	*dest;
 
-	dest = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dest = color;
+	dest = data->addr + (y * data->line_length + x * \
+	(data->bits_per_pixel / 8));
+	*(unsigned int *)dest = color;
 }

@@ -46,7 +46,8 @@ void	bad_arg2(void)
 	ft_printf("\t - d_red\n");
 	ft_printf("\t - d_green\n");
 	ft_printf("\t - d_blue\n");
-	ft_printf("\t - Les couleurs doivent etre specifier apres le 1 er arguments\n");
+	ft_printf("\t - Les couleurs doivent etre specifier apres le 1 er\
+ arguments\n");
 	ft_printf("\t\texemple : ./fractol Julia d_red 0.38 -0.0128\n\n");
 }
 
