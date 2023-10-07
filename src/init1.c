@@ -39,7 +39,7 @@ void	init_data(t_data *data, char *name, char **option)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		exit(0);
+		exit(1);
 	define_size(data);
 	if (ft_strncmp(name, "Mandelbrot", 11) && ft_strncmp(name, "Julia", 6) && \
 	ft_strncmp(name, "Burning_ship", 13))
