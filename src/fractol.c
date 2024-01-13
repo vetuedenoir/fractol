@@ -43,7 +43,6 @@ int max_iteration, t_math t))
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img1.img, 0, 0);
 	if (data->b == 0)
 		stringput(data);
-	ft_clear_data(data);
 }
 
 int	main(int argc, char *argv[])
@@ -54,7 +53,6 @@ int	main(int argc, char *argv[])
 	if (argc == 1 || argc > 5)
 		bad_arg(&data, 1);
 	init_data(&data, argv[1], &argv[2]);
-	data.max_iteration = 100000;
 	createimg(&data, data.f);
 	mlx_mouse_hook(data.mlx_win, mouse_hook, &data);
 	mlx_key_hook(data.mlx_win, &key_hook, &data);
