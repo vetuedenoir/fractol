@@ -29,7 +29,7 @@ MLXPATH = minilibx-linux/libmlx.a
 all:	$(NAME)
 
 $(NAME):	$(OBJ) | $(LIBPATH) $(MLXPATH)
-	$(CC) $(CFLAGS) ${OBJ} ${MLXPATH} ${LIBPATH} -o ${NAME} -L ./mlx -lX11 -lXext -lm
+	$(CC) $(CFLAGS) ${OBJ} ${MLXPATH} ${LIBPATH} -o ${NAME} -L ./mlx -lX11 -lXext -lm -lpthread
 	
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c fractol.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

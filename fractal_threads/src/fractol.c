@@ -19,31 +19,52 @@ long double	ft_abs(long double n)
 	return (n);
 }
 
-void	createimg(t_data *data, int (*f)(long double x, long double y,
-int max_iteration, t_math t))
+void	*routine(void *arg)
 {
-	int		largeur;
-	int		hauteur;
-	int		color;
+	int	largeur;
+	int	color;
+	t_data *data;
 
+	data = (t_data *)arg;
+	int	(*f)(long double x, long double y, int max_iteration, \
+t_math t) = data->f;
+	largeur = 0;
+	while (largeur < data->width)
+	{
+		color = f((double)largeur / (double)data->p.zoom + data->p.x1,
+				(double)(data->hauteur) / (double)data->p.zoom - data->p.y2,
+					data->max_iteration, data->mt);	
+		color_put(data, color, largeur, (data->hauteur));
+		largeur++;
+	}
+	return (arg);
+}
+
+void	createimg(t_data *data, pthread_t *th)
+{
+	int		hauteur;
+	int		i;
+	static t_data dt[NUM_THREADS];
+
+	for (i = 0; i < NUM_THREADS; i++)
+		dt[i] = *data;
 	hauteur = 0;
 	while (hauteur < data->height)
 	{
-		largeur = 0;
-		while (largeur < data->width)
+		i = 0;
+		while (hauteur + i < data->height && i < NUM_THREADS)
 		{
-			color = f((double)largeur / (double)data->p.zoom + data->p.x1,
-					(double)hauteur / (double)data->p.zoom - data->p.y2,
-					data->max_iteration, data->mt);
-			color_put(data, color, largeur, hauteur);
-			largeur++;
+			dt[i].hauteur = hauteur + i;
+			pthread_create(&th[i], NULL, &routine, &dt[i]);
+			i++;
 		}
-		hauteur++;
+		while (--i >= 0)
+			pthread_join(th[i], NULL);
+		hauteur += NUM_THREADS;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img1.img, 0, 0);
 	if (data->b == 0)
 		stringput(data);
-	ft_clear_data(data);
 }
 
 int	main(int argc, char *argv[])
@@ -54,8 +75,7 @@ int	main(int argc, char *argv[])
 	if (argc == 1 || argc > 5)
 		bad_arg(&data, 1);
 	init_data(&data, argv[1], &argv[2]);
-	data.max_iteration = 100000;
-	createimg(&data, data.f);
+	createimg(&data, data.th);
 	mlx_mouse_hook(data.mlx_win, mouse_hook, &data);
 	mlx_key_hook(data.mlx_win, &key_hook, &data);
 	mlx_hook(data.mlx_win, 17, 1L << 0, quit, &data);
